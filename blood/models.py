@@ -12,6 +12,8 @@ class BloodRequest(models.Model):
     request_by_donor=models.ForeignKey(dmodels.Donor,null=True,on_delete=models.CASCADE)
     patient_name=models.CharField(max_length=30)
     patient_age=models.PositiveIntegerField()
+    email =  models.EmailField(blank=True)
+    pincode = models.IntegerField(null=True,blank=True)
     reason=models.CharField(max_length=500)
     bloodgroup=models.CharField(max_length=10)
     unit=models.PositiveIntegerField(default=0)
@@ -20,4 +22,10 @@ class BloodRequest(models.Model):
     def __str__(self):
         return self.bloodgroup
 
-        
+class contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    
+    def __str__(self):
+        return self.name 

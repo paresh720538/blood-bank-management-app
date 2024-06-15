@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from . import models
 
 
+
 class DonorUserForm(forms.ModelForm):
     class Meta:
         model=User
@@ -19,4 +20,7 @@ class DonorForm(forms.ModelForm):
 class DonationForm(forms.ModelForm):
     class Meta:
         model=models.BloodDonate
-        fields=['age','bloodgroup','disease','unit']
+        fields=['email','age','bloodgroup','disease','unit','pincode']
+        
+        
+

@@ -29,6 +29,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="name">Email</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field request_form.email|attr:'required:true'  class="input--style-5"  %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">PinCode</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field request_form.pincode|attr:'required:true'  class="input--style-5"  %}
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-row">
                         <div class="name">Patient Age</div>
@@ -78,16 +94,6 @@
                             </div>
                         </div>
                     </div>
-
-      <!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->              
-
-
-
-
                     <div>
                         <button class="btn btn--radius-2 btn-danger" type="submit">REQUEST</button>
                     </div>

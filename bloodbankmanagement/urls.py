@@ -19,14 +19,19 @@ from django.contrib.auth.views import LogoutView,LoginView
 from blood import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     
     path('donor/',include('donor.urls')),
     path('patient/',include('patient.urls')),
+    path('hospital/',include('hospital.urls')),
 
     
-    path('',views.home_view,name=''),
+    path('',views.home_view,name='home'),
     path('logout', LogoutView.as_view(template_name='blood/logout.html'),name='logout'),
+    
+    path('hospital-request',views.hospitalRequest,name='hospital-request'),
+    path('hospital-approved/<int:id>',views.hospitalApprove,name='hospital-approved'),
+    path('hospital-rejected/<int:id>',views.hospitalRejected,name='hospital-rejected'),
+    path('about',views.about,name='about'),
 
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
     path('adminlogin', LoginView.as_view(template_name='blood/adminlogin.html'),name='adminlogin'),
@@ -45,5 +50,7 @@ urlpatterns = [
     path('admin-request-history', views.admin_request_history_view,name='admin-request-history'),
     path('update-approve-status/<int:pk>', views.update_approve_status_view,name='update-approve-status'),
     path('update-reject-status/<int:pk>', views.update_reject_status_view,name='update-reject-status'),
+    path('contact',views.contact,name='contact'),
+    path('success',views.contact_success,name='success'),
    
 ]

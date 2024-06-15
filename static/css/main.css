@@ -1,7 +1,4 @@
 
-/* ==========================================================================
-   #FONT
-   ========================================================================== */
 .font-robo {
   font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
 }
@@ -13,10 +10,6 @@
 .font-opensans {
   font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif;
 }
-
-/* ==========================================================================
-   #GRID
-   ========================================================================== */
 .row {
   display: -webkit-box;
   display: -webkit-flex;
@@ -153,13 +146,6 @@
   }
 }
 
-/* ==========================================================================
-   #BOX-SIZING
-   ========================================================================== */
-/**
- * More sensible default box-sizing:
- * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
- */
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -271,11 +257,11 @@ h6 {
    #BACKGROUND
    ========================================================================== */
 .bg-blue {
-  background: #2c6ed5;
+  background : linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
 }
 
 .bg-red {
-  background: #fa4251;
+  background:linear-gradient(90deg, rgba(0, 40, 83, 1) 1%, rgba(4, 12, 24, 1) 100%);
 }
 
 .bg-gra-01 {
@@ -715,9 +701,7 @@ input {
   transform: rotate(-180deg);
 }
 
-/* ==========================================================================
-   #TITLE
-   ========================================================================== */
+
 .title {
   font-size: 24px;
   text-transform: uppercase;
@@ -726,9 +710,7 @@ input {
   color: #fff;
 }
 
-/* ==========================================================================
-   #CARD
-   ========================================================================== */
+
 .card {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;

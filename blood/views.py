@@ -12,6 +12,7 @@ from donor import models as dmodels
 from patient import models as pmodels
 from donor import forms as dforms
 from patient import forms as pforms
+from hospital.models import hospitalRegister
 
 def home_view(request):
     x=models.Stock.objects.all()
@@ -214,7 +215,16 @@ def update_approve_status_view(request,pk):
     else:
         message="Stock Doest Not Have Enough Blood To Approve This Request, Only "+str(stock.unit)+" Unit Available"
     req.save()
-
+    print(req.email)
+    email = req.email
+    subject = "Your Blood Request is Approved Succesfully. We are always ready to help you . Please share a feedback to us,Thank You!"
+    send_mail(
+            'Blood Request Approved Successfully From Life Line Savior',
+            subject,
+            'settings.EMAIL_HOST_USER', 
+            [email], 
+            fail_silently=False
+        )
     requests=models.BloodRequest.objects.all().filter(status='Pending')
     return render(request,'blood/admin_request.html',{'requests':requests,'message':message})
 
@@ -223,6 +233,15 @@ def update_reject_status_view(request,pk):
     req=models.BloodRequest.objects.get(id=pk)
     req.status="Rejected"
     req.save()
+    email = req.email
+    subject = "Sorry  Your Blood Request is Rejected! Because your Requested blood group is not available at this time,Thank You!"
+    send_mail(
+            'Blood Request Rejected 😞 From Life Line Savior',
+            subject,
+            'settings.EMAIL_HOST_USER', 
+            [email], 
+            fail_silently=False
+        )
     return HttpResponseRedirect('/admin-request')
 
 @login_required(login_url='adminlogin')
@@ -230,12 +249,19 @@ def approve_donation_view(request,pk):
     donation=dmodels.BloodDonate.objects.get(id=pk)
     donation_blood_group=donation.bloodgroup
     donation_blood_unit=donation.unit
-
     stock=models.Stock.objects.get(bloodgroup=donation_blood_group)
     stock.unit=stock.unit+donation_blood_unit
     stock.save()
-
     donation.status='Approved'
+    email = donation.email
+    subject = "We are pleased to inform you that your blood donation was successful. Your contribution will help save lives and provide hope to those in need of blood transfusions."
+    send_mail(
+            'Thank You From Life Line Savior',
+            subject,
+            'settings.EMAIL_HOST_USER', 
+            [email], 
+            fail_silently=False
+        )
     donation.save()
     return HttpResponseRedirect('/admin-donation')
 
@@ -245,4 +271,62 @@ def reject_donation_view(request,pk):
     donation=dmodels.BloodDonate.objects.get(id=pk)
     donation.status='Rejected'
     donation.save()
+    email = donation.email
+    subject = "Thank You for your Interest. We regret to inform you that your details does not meet our criteria. Hence, We will not able to proceed with your Request 😞."
+    send_mail(
+            'Request Denied - Life Line Server',
+            subject,
+            'settings.EMAIL_HOST_USER', 
+            [email], 
+            fail_silently=False
+        )
     return HttpResponseRedirect('/admin-donation')
+
+
+def contact(request):
+    if request.method == 'POST':
+      
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        messages = request.POST.get('message')
+        
+        models.contact.objects.create(name = name , email = email,message= messages)
+        message = 'Thanks for your Postitive Feedback!'
+        send_mail(
+            'Thank You From Life Line Saver',
+            message,
+            'settings.EMAIL_HOST_USER', 
+            [email], 
+            fail_silently=False
+        )
+        return redirect('success')
+    return render(request,'blood/contact.html')
+
+def contact_success(request):
+    return render(request,'blood/success.html')
+
+
+def hospitalRequest(request):
+    data = hospitalRegister.objects.all()
+    return render(request,'hospital/hospitalrequest.html',{'data':data})
+
+def hospitalApprove(request,id):
+    data = hospitalRegister.objects.filter(id = id).first()
+    data.status = 'approved'
+    data.save()
+    data_extra = hospitalRegister.objects.all()
+    
+    return render(request,'hospital/hospitalrequest.html',{'message':"Approved Successfully",'data':data_extra})
+
+def hospitalRejected(request,id):
+    data = hospitalRegister.objects.filter(id = id).first()
+    data_extra = hospitalRegister.objects.all()
+    data.status = 'rejected'
+    data.save()
+    return render(request,'hospital/hospitalrequest.html',{'message':"Rejected",'data':data_extra})
+
+
+
+
+def about(request):
+    return render(request,'blood/about.html')

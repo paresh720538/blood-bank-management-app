@@ -4,12 +4,10 @@ from django.contrib.auth.models import User
 class Patient(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic= models.ImageField(upload_to='profile_pic/Patient/',null=True,blank=True)
-
     age=models.PositiveIntegerField()
     bloodgroup=models.CharField(max_length=10)
     disease=models.CharField(max_length=100)
     doctorname=models.CharField(max_length=50)
-
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20,null=False)
    
@@ -21,3 +19,14 @@ class Patient(models.Model):
         return self
     def __str__(self):
         return self.user.first_name
+    
+
+class allrequestinfo(models.Model):
+    random_number = models.IntegerField()
+    cetagory = models.CharField(max_length=30)
+    email = models.EmailField()
+    datetime = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    def __str__(self):
+        return self.cetagory
+
+
